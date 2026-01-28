@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>釜山奢華醫美之旅 | 官方旗艦導覽</title>
+    <title>釜山奢華醫美之旅 | 官方導覽手冊 (純淨版)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
-            --color-primary: #1e3a8a; /* 深海藍 */
-            --color-secondary: #06b6d4; /* 活力青 */
-            --color-accent: #ec4899; /* 醫美粉 */
+            --color-primary: #1e3a8a;
+            /* 深海藍 */
+            --color-secondary: #06b6d4;
+            /* 活力青 */
+            --color-accent: #ec4899;
+            /* 醫美粉 */
             --color-bg: #f8fafc;
         }
 
@@ -21,7 +25,7 @@
             scroll-behavior: smooth;
         }
 
-        /* 穩定容器：防止破圖與塌陷 */
+        /* 穩定容器：防止圖表塌陷 */
         .viz-container {
             position: relative;
             width: 100%;
@@ -30,6 +34,7 @@
             border-radius: 1.5rem;
         }
 
+        /* 圖片區塊穩定性 */
         .img-container {
             position: relative;
             width: 100%;
@@ -51,12 +56,13 @@
             transform: scale(1.08);
         }
 
-        /* 奢華裝飾線條 */
+        /* 裝飾線條 */
         .day-divider {
             position: relative;
             padding-left: 2rem;
             border-left: 4px solid #e2e8f0;
         }
+
         .day-marker {
             position: absolute;
             left: -14px;
@@ -69,62 +75,62 @@
             z-index: 10;
         }
 
-        /* AI 聊天室動畫 */
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
-        .ai-fab {
-            animation: float 3s ease-in-out infinite;
+        .tip-box {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-left: 4px solid var(--color-secondary);
         }
 
-        .chat-bubble-user { background: var(--color-primary); color: white; border-radius: 1.25rem 1.25rem 0.25rem 1.25rem; }
-        .chat-bubble-ai { background: white; color: #1e293b; border-radius: 1.25rem 1.25rem 1.25rem 0.25rem; border: 1px solid #e2e8f0; }
+        .big-number {
+            font-size: 5rem;
+            font-weight: 900;
+            line-height: 1;
+            background: linear-gradient(to bottom, var(--color-primary), var(--color-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
     </style>
-    <!-- 
-        視覺策略 (Visual Strategy):
-        - 使用 Unsplash 真實圖片 URL。
-        - 採用 16:9 固定比例容器防止加載時版面跳動。
-        - 16 字元 Label Wrapping 邏輯已實作於 JavaScript。
-        - 完整呈現 5 天 20 個以上的時程細節。
-        - NO SVG USED. NO MERMAID USED.
-    -->
 </head>
+
 <body class="antialiased">
 
     <!-- Hero Header -->
     <header class="relative min-h-[60vh] flex items-center justify-center bg-slate-900 text-white overflow-hidden">
-        <img src="https://images.unsplash.com/photo-1548115184-bc6544d06a58?q=80&w=2070&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-50">
-        <div class="absolute inset-0 bg-gradient-to-b from-blue-900/60 to-slate-900 z-10"></div>
+        <img src="assets/images/messageImage_1769583032709.jpg"
+            class="absolute inset-0 w-full h-full object-cover opacity-100">
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent z-10"></div>
         <div class="relative z-20 max-w-5xl mx-auto px-6 text-center">
-            <div class="inline-block px-4 py-1 bg-cyan-500 rounded-full text-xs font-bold tracking-widest mb-6 shadow-lg">PREMIUM EXPERIENCE</div>
-            <h1 class="text-6xl md:text-8xl font-black mb-8 tracking-tighter">釜山奢華<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-pink-500">醫美全導覽</span></h1>
-            <p class="text-xl md:text-3xl font-light opacity-90 italic">8 人團體 ‧ LCT 海景公寓 ‧ 私人遊艇 ‧ 帝王蟹盛宴</p>
+            <div
+                class="inline-block px-4 py-1 bg-cyan-500 rounded-full text-xs font-bold tracking-widest mb-6 shadow-lg uppercase">
+                Flagship Guide</div>
+            <h1 class="text-5xl md:text-7xl font-black mb-8 tracking-tighter">釜山奢華醫美之旅<br><span
+                    class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-pink-500">8人團體全攻略</span></h1>
+            <p class="text-lg md:text-2xl font-light opacity-90 italic">LCT 海景公寓 ‧ 私人遊艇 ‧ 帝王蟹盛宴 ‧ 專業醫美</p>
         </div>
     </header>
 
-    <main class="max-w-6xl mx-auto px-6 -mt-20 relative z-30 pb-32">
-        
+    <main class="max-w-6xl mx-auto px-6 -mt-16 relative z-30 pb-32">
+
         <!-- Data Dashboards -->
         <section class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-24">
-            <div class="bg-white rounded-[2.5rem] shadow-2xl p-8 border border-slate-100 flex flex-col">
+            <div class="bg-white rounded-[2.5rem] shadow-2xl p-8 border border-slate-100">
                 <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center">
                     <span class="w-2 h-8 bg-cyan-500 rounded-full mr-3"></span>行程屬性分佈 (DNA)
                 </h3>
-                <div class="viz-container flex-1"><canvas id="tripDnaChart"></canvas></div>
+                <div class="viz-container"><canvas id="tripDnaChart"></canvas></div>
             </div>
-            <div class="bg-white rounded-[2.5rem] shadow-2xl p-8 border border-slate-100 flex flex-col">
+            <div class="bg-white rounded-[2.5rem] shadow-2xl p-8 border border-slate-100">
                 <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center">
                     <span class="w-2 h-8 bg-pink-500 rounded-full mr-3"></span>體力強度預測 (Intensity)
                 </h3>
-                <div class="viz-container flex-1"><canvas id="energyChart"></canvas></div>
+                <div class="viz-container"><canvas id="energyChart"></canvas></div>
             </div>
         </section>
 
         <!-- Detailed Journey -->
         <section class="bg-white rounded-[3rem] shadow-2xl p-8 md:p-16 mb-24">
-            <h2 class="text-4xl font-black text-slate-900 mb-16 border-b border-slate-100 pb-8">五天完整行程明細</h2>
+            <h2
+                class="text-4xl font-black text-slate-900 mb-16 border-b border-slate-100 pb-8 text-center md:text-left">
+                五天完整行程細節</h2>
 
             <div class="space-y-24">
 
@@ -133,18 +139,30 @@
                     <div class="day-marker"></div>
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
                         <div class="lg:col-span-7">
-                            <span class="badge bg-blue-100 text-blue-700 font-bold px-3 py-1 rounded-md text-sm">DAY 01 | 6/5 週五</span>
+                            <span class="bg-blue-100 text-blue-700 font-bold px-3 py-1 rounded-md text-sm">DAY 01 | 6/5
+                                週五</span>
                             <h3 class="text-3xl font-black text-slate-800 mt-4 mb-6">抵達、西面購物與夕陽甘川洞</h3>
-                            <div class="space-y-4 text-slate-600">
-                                <p><strong class="text-blue-900">06:10：</strong> 抵達金海機場。預約 2 台 Venti 大車，先去「西面登巴斯塔」寄行李。</p>
-                                <p><strong class="text-blue-900">上午：</strong> 西面早餐與補眠。享用豬肉湯飯，或在咖啡廳稍作休息。若飯店有空房可詢問能否提早進房。</p>
-                                <p><strong class="text-blue-900">15:00 - 17:30：</strong> 甘川洞文化村。避開早晨旅行團，快閃拍小王子，這時光線溫柔，8 人拍照更美。</p>
-                                <p><strong class="text-blue-900">18:00：</strong> 南浦洞美食：下山去南浦洞/札嘎其吃晚餐（如：烤牛腸或海鮮湯），逛 BIFF 廣場，隨後搭計程車回西面休息。</p>
+                            <div class="space-y-4 text-slate-600 mb-8">
+                                <p><strong class="text-blue-900">06:10：</strong> 抵達金海機場。預約 2 台 Venti 大車，先去「西面登巴斯塔」寄行李。
+                                </p>
+                                <p><strong class="text-blue-900">上午：</strong> 西面早餐與補眠。享用豬肉湯飯，或在咖啡廳稍作休息。</p>
+                                <p><strong class="text-blue-900">15:00 - 17:30：</strong> 甘川洞文化村。避開早晨旅行團，這時光線溫柔，8 人拍照更美。
+                                </p>
+                                <p><strong class="text-blue-900">18:00：</strong> 南浦洞美食：下山去南浦洞/札嘎其吃晚餐，逛 BIFF 廣場，回西面休息。
+                                </p>
+                            </div>
+                            <div class="tip-box p-6 rounded-2xl">
+                                <h4 class="font-bold text-blue-900 mb-2 flex items-center">💡 專家建議</h4>
+                                <ul class="text-sm space-y-2">
+                                    <li>• 甘川洞拍照建議穿著簡潔單色系，背景才不會太亂。</li>
+                                    <li>• 推薦南浦洞烤牛腸，8人聚餐氣氛極佳。</li>
+                                </ul>
                             </div>
                         </div>
                         <div class="lg:col-span-5">
                             <div class="img-container">
-                                <img src="https://images.unsplash.com/photo-1620162540679-052a5592ec69?q=80&w=1974&auto=format&fit=crop" alt="甘川洞">
+                                <img src="https://images.unsplash.com/photo-1578301978018-3005759f48f3?q=80&w=2070&auto=format&fit=crop"
+                                    alt="甘川洞">
                             </div>
                         </div>
                     </div>
@@ -155,18 +173,27 @@
                     <div class="day-marker"></div>
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
                         <div class="lg:col-span-7">
-                            <span class="badge bg-cyan-100 text-cyan-700 font-bold px-3 py-1 rounded-md text-sm">DAY 02 | 6/6 週六</span>
+                            <span class="bg-cyan-100 text-cyan-700 font-bold px-3 py-1 rounded-md text-sm">DAY 02 | 6/6
+                                週六</span>
                             <h3 class="text-3xl font-black text-slate-800 mt-4 mb-6">松島美景與廣安里無人機震撼</h3>
-                            <div class="space-y-4 text-slate-600">
+                            <div class="space-y-4 text-slate-600 mb-8">
                                 <p><strong class="text-blue-900">11:00：</strong> 松島海上纜車。體驗透明水晶車廂，輕鬆看海不費力。</p>
-                                <p><strong class="text-blue-900">14:00：</strong> 白淺灘文化村。若不想走路，可選一間海景咖啡廳坐著放空，欣賞影島海景。</p>
-                                <p><strong class="text-blue-900">18:00：</strong> 廣安里準備。前往遊艇碼頭，準備 8 人包船體驗。</p>
-                                <p><strong class="text-blue-900">20:00：</strong> 無人機秀 + 遊艇煙火。週六重頭戲，在海上享受最完美的視告。</p>
+                                <p><strong class="text-blue-900">14:00：</strong> 白淺灘文化村。海景咖啡廳坐著放空，欣賞影島海景。</p>
+                                <p><strong class="text-blue-900">18:00：</strong> 廣安里遊艇。前往遊艇碼頭，準備 8 人包船體驗。</p>
+                                <p><strong class="text-blue-900">20:00：</strong> 無人機秀 + 煙火。週六重頭戲，海上享受最完美視角。</p>
+                            </div>
+                            <div class="tip-box p-6 rounded-2xl">
+                                <h4 class="font-bold text-blue-900 mb-2 flex items-center">💡 專家建議</h4>
+                                <ul class="text-sm space-y-2">
+                                    <li>• 無人機秀是週六限定，海上包船需提前至少三週預約。</li>
+                                    <li>• 晚上海上溫差大，建議隨身攜帶薄外套。</li>
+                                </ul>
                             </div>
                         </div>
                         <div class="lg:col-span-5">
                             <div class="img-container">
-                                <img src="https://images.unsplash.com/photo-1548115184-bc6544d06a58?q=80&w=2070&auto=format&fit=crop" alt="廣安里夜景">
+                                <img src="https://images.unsplash.com/photo-1548115184-bc6544d06a58?q=80&w=2070&auto=format&fit=crop"
+                                    alt="廣安里">
                             </div>
                         </div>
                     </div>
@@ -177,19 +204,28 @@
                     <div class="day-marker"></div>
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
                         <div class="lg:col-span-7">
-                            <span class="badge bg-pink-100 text-pink-700 font-bold px-3 py-1 rounded-md text-sm">DAY 03 | 6/7 週日</span>
+                            <span class="bg-pink-100 text-pink-700 font-bold px-3 py-1 rounded-md text-sm">DAY 03 | 6/7
+                                週日</span>
                             <h3 class="text-3xl font-black text-slate-800 mt-4 mb-6">東釜山大集結 (體力挑戰)</h3>
-                            <div class="space-y-4 text-slate-600">
+                            <div class="space-y-4 text-slate-600 mb-8">
                                 <p><strong class="text-blue-900">10:00：</strong> 移動至海雲台。換至 NEWCZ LCT 公寓寄行李。</p>
-                                <p><strong class="text-blue-900">11:30：</strong> 藍線公園。膠囊列車 (尾浦→青沙浦) ＋ 海岸列車 (青沙浦→松亭)。</p>
-                                <p><strong class="text-blue-900">14:00：</strong> 海東龍宮寺。松亭站旁車程 10 分鐘，打卡海邊神祕寺廟。</p>
-                                <p><strong class="text-blue-900">15:30：</strong> Skyline Luge 斜坡滑車。就在隔壁，8 人進行刺激的競速遊戲。</p>
-                                <p><strong class="text-blue-900">17:30：</strong> 機張市場大螃蟹。行程結束後的豪華獎勵，8 人爽吃 King Crab。</p>
+                                <p><strong class="text-blue-900">11:30：</strong> 藍線公園。膠囊列車 ＋ 海岸列車。</p>
+                                <p><strong class="text-blue-900">14:00：</strong> 海東龍宮寺。打卡韓國唯一的海邊神秘寺廟。</p>
+                                <p><strong class="text-blue-900">15:30：</strong> Skyline Luge。8 人進行刺激的競速遊戲。</p>
+                                <p><strong class="text-blue-900">17:30：</strong> 機張市場大螃蟹。行程結束後的豪華獎勵。</p>
+                            </div>
+                            <div class="tip-box p-6 rounded-2xl">
+                                <h4 class="font-bold text-blue-900 mb-2 flex items-center">💡 專家建議</h4>
+                                <ul class="text-sm space-y-2">
+                                    <li>• 藍線公園膠囊列車請務必準時官網搶票。</li>
+                                    <li>• 機張市場吃螃蟹記得跟店家確認 8 人用餐是否包含蟹膏炒飯。</li>
+                                </ul>
                             </div>
                         </div>
                         <div class="lg:col-span-5">
                             <div class="img-container">
-                                <img src="https://images.unsplash.com/photo-1667469601340-9e0c7109559f?q=80&w=1964&auto=format&fit=crop" alt="藍線公園">
+                                <img src="https://images.unsplash.com/photo-1620162540679-052a5592ec69?q=80&w=1974&auto=format&fit=crop"
+                                    alt="藍線公園">
                             </div>
                         </div>
                     </div>
@@ -200,18 +236,27 @@
                     <div class="day-marker"></div>
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
                         <div class="lg:col-span-7">
-                            <span class="badge bg-purple-100 text-purple-700 font-bold px-3 py-1 rounded-md text-sm">DAY 04 | 6/8 週一</span>
+                            <span class="bg-purple-100 text-purple-700 font-bold px-3 py-1 rounded-md text-sm">DAY 04 |
+                                6/8 週一</span>
                             <h3 class="text-3xl font-black text-slate-800 mt-4 mb-6">醫美日、血拼與公寓派對</h3>
-                            <div class="space-y-4 text-slate-600">
-                                <p><strong class="text-blue-900">10:00：</strong> 樂天 Outlet 購物。趁醫美前體力好，去東釜山樂天 Outlet 進行最後大採買。</p>
-                                <p><strong class="text-blue-900">14:00：</strong> 5 位女生醫美。建議預約海雲台 PPEUM 或 Renovo。結束後僅需 5-10 分鐘車程回飯店。</p>
-                                <p><strong class="text-blue-900">18:00：</strong> 入住 LCT 公寓。醫美後直接回豪華公寓，大客廳冰敷休息。</p>
-                                <p><strong class="text-blue-900">19:00：</strong> 公寓外送派對。8 人在無敵海景大客廳點炸雞、炸醬麵外送，這才是公寓飯店最棒的用法。</p>
+                            <div class="space-y-4 text-slate-600 mb-8">
+                                <p><strong class="text-blue-900">10:00：</strong> 樂天 Outlet 購物。最後大採買。</p>
+                                <p><strong class="text-blue-900">14:00：</strong> 醫美行程。建議預約 PPEUM 或 Renovo 海雲台店。</p>
+                                <p><strong class="text-blue-900">18:00：</strong> 入住 LCT 公寓。醫美後直接回豪宅冰敷休息。</p>
+                                <p><strong class="text-blue-900">19:00：</strong> 公寓外送派對。8 人無敵海景炸雞派對。</p>
+                            </div>
+                            <div class="tip-box p-6 rounded-2xl">
+                                <h4 class="font-bold text-blue-900 mb-2 flex items-center">💡 專家建議</h4>
+                                <ul class="text-sm space-y-2">
+                                    <li>• 醫美後若有微出血，不建議去桑拿或泡溫泉。</li>
+                                    <li>• 推薦使用外送 App 點 BHC 或橋村炸雞。</li>
+                                </ul>
                             </div>
                         </div>
                         <div class="lg:col-span-5">
                             <div class="img-container">
-                                <img src="https://images.unsplash.com/photo-1621255554330-9759bc4a8c99?q=80&w=1974&auto=format&fit=crop" alt="LCT海景">
+                                <img src="https://images.unsplash.com/photo-1582996269871-dad1e4adbbc7?q=80&w=2070&auto=format&fit=crop"
+                                    alt="LCT">
                             </div>
                         </div>
                     </div>
@@ -222,72 +267,51 @@
                     <div class="day-marker"></div>
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
                         <div class="lg:col-span-7">
-                            <span class="badge bg-slate-200 text-slate-700 font-bold px-3 py-1 rounded-md text-sm">DAY 05 | 6/9 週二</span>
+                            <span class="badge bg-slate-200 text-slate-700 font-bold px-3 py-1 rounded-md text-sm">DAY
+                                05 | 6/9 週二</span>
                             <h3 class="text-3xl font-black text-slate-800 mt-4 mb-6">悠閒採買與賦歸</h3>
                             <div class="space-y-4 text-slate-600">
-                                <p><strong class="text-blue-900">10:00：</strong> 最後補貨。醫美組在公寓放鬆，其餘人前往 E-Mart 海雲台店掃伴手禮。</p>
-                                <p><strong class="text-blue-900">13:00：</strong> 海雲台午餐。選清淡的鱈魚湯或冷麵（醫美組友善餐點）。</p>
-                                <p><strong class="text-blue-900">17:00：</strong> 啟程機場。預約大車 Venti，載著滿滿戰利品與變美的心情回機場。</p>
-                                <p><strong class="text-blue-900">20:00：</strong> 搭乘 LJ751 班機回程。</p>
+                                <p><strong class="text-blue-900">10:00：</strong> E-Mart 採買。購買韓國伴手禮。</p>
+                                <p><strong class="text-blue-900">13:00：</strong> 海雲台午餐。鱈魚湯或冷麵。</p>
+                                <p><strong class="text-blue-900">17:00：</strong> 啟程機場。Venti 回程。</p>
+                                <p><strong class="text-blue-900">20:00：</strong> 搭乘 LJ751 班機。</p>
                             </div>
                         </div>
                         <div class="lg:col-span-5 flex items-center justify-center">
-                            <div class="w-full h-full bg-slate-100 rounded-3xl flex items-center justify-center text-8xl grayscale opacity-50">✈️</div>
+                            <div
+                                class="w-full h-full bg-slate-100 rounded-3xl flex items-center justify-center text-8xl grayscale opacity-30">
+                                ✈️</div>
                         </div>
                     </div>
                 </div>
 
             </div>
         </section>
+
+        <!-- Stats Section -->
+        <section
+            class="bg-slate-900 rounded-[3rem] p-12 text-white mb-24 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div><span class="big-number">05</span>
+                <p class="text-xs uppercase opacity-60 mt-4">總天數</p>
+            </div>
+            <div><span class="big-number">08</span>
+                <p class="text-xs uppercase opacity-60 mt-4">成員人數</p>
+            </div>
+            <div><span class="big-number">LCT</span>
+                <p class="text-xs uppercase opacity-60 mt-4">據點</p>
+            </div>
+            <div><span class="big-number">100</span>
+                <p class="text-xs uppercase opacity-60 mt-4">滿意度</p>
+            </div>
+        </section>
     </main>
 
-    <!-- Floating AI Button -->
-    <div class="fixed bottom-10 right-10 z-50">
-        <button id="open-chat" class="ai-fab w-20 h-20 bg-gradient-to-tr from-blue-600 to-pink-500 text-white rounded-full shadow-2xl flex items-center justify-center text-3xl hover:scale-110 transition-transform">✨</button>
-    </div>
-
-    <!-- AI Chat Modal -->
-    <div id="chat-modal" class="fixed inset-0 z-[60] hidden flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
-        <div class="bg-slate-50 w-full max-w-xl h-[700px] rounded-[2.5rem] shadow-2xl flex flex-col overflow-hidden">
-            <div class="bg-blue-900 p-6 flex justify-between items-center text-white">
-                <div class="flex items-center gap-4">
-                    <span class="text-2xl">✨</span>
-                    <div>
-                        <h3 class="font-bold">釜山 ✨ AI 導遊</h3>
-                        <p class="text-[10px] opacity-60 uppercase">Professional Travel Consultant</p>
-                    </div>
-                </div>
-                <button id="close-chat" class="text-4xl leading-none">&times;</button>
-            </div>
-            <div id="chat-box" class="flex-1 overflow-y-auto p-6 space-y-4">
-                <div class="chat-bubble-ai p-4 text-sm leading-relaxed max-w-[90%]">
-                    您好！我是您的釜山奢華醫美之旅助手。我有關於五天行程的所有細節。您想問關於 LCT 入住、醫美診所預約，還是機張市場點螃蟹的事？
-                </div>
-            </div>
-            <div class="p-4 bg-white border-t flex gap-2">
-                <input type="text" id="chat-input" placeholder="問問行程細節..." class="flex-1 bg-slate-100 rounded-xl px-5 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <button id="chat-send" class="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-700 active:scale-95 transition-all">發送</button>
-            </div>
-        </div>
-    </div>
-
     <footer class="bg-white border-t border-slate-200 py-16 text-center text-slate-400 text-sm">
-        <p>Busan Luxury Medical Tour | 官方視覺導覽 © 2025</p>
+        <p>Busan Luxury Medical Tour | 官方導覽手冊 © 2025</p>
     </footer>
 
     <script>
-        const apiKey = "";
-        const model = "gemini-2.5-flash-preview-09-2025";
-        const systemPrompt = `你是一位專業的釜山高端旅遊導遊，負責接待一個 8 人的團體。
-        行程概括：
-        D1: 6/5 週五，機場抵達，西面登巴斯塔寄行李，下午甘川洞文化村，晚上南浦洞/札嘎其美食。
-        D2: 6/6 週六，松島水晶纜車，白淺灘文化村海景咖啡，晚上廣安里包遊艇看週六限定無人機秀+煙火。
-        D3: 6/7 週日，移動日，海雲台 LCT 公寓。藍線公園膠囊列車(尾浦到青沙浦)，海東龍宮寺，斜坡滑車 Luge，晚上機張市場帝王蟹大餐。
-        D4: 6/8 週一，樂天 Outlet 購物，下午 5 女醫美 (PPEUM/Renovo 海雲台店)，晚上 LCT 公寓大客廳炸雞外送派對。
-        D5: 6/9 週二，最後補貨 E-Mart，海雲台鱈魚湯午餐，20:00 班機回程。
-        請用繁體中文回答，口吻奢華、精準且具備導遊的親切感。`;
-
-        // --- Chart Helper ---
+        // --- 圖表邏輯 (Chart.js) ---
         function wrapLabel(str, max) {
             if (str.length <= max) return str;
             const words = str.split(' ');
@@ -308,7 +332,7 @@
             }
         };
 
-        window.onload = function() {
+        window.onload = function () {
             // Radar DNA
             const ctxDna = document.getElementById('tripDnaChart').getContext('2d');
             new Chart(ctxDna, {
@@ -356,51 +380,7 @@
                 }
             });
         };
-
-        // --- AI Chat Logic ---
-        const modal = document.getElementById('chat-modal');
-        const chatBox = document.getElementById('chat-box');
-        const chatInput = document.getElementById('chat-input');
-        const sendBtn = document.getElementById('chat-send');
-
-        document.getElementById('open-chat').onclick = () => { modal.classList.remove('hidden'); chatInput.focus(); };
-        document.getElementById('close-chat').onclick = () => modal.classList.add('hidden');
-
-        async function handleSend() {
-            const text = chatInput.value.trim();
-            if (!text) return;
-            appendMsg('user', text);
-            chatInput.value = '';
-
-            const loadingId = 'loading-' + Date.now();
-            appendMsg('ai', '正在為您查詢詳細行程資料...', loadingId);
-
-            try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: text }] }],
-                        systemInstruction: { parts: [{ text: systemPrompt }] }
-                    })
-                });
-                const data = await response.json();
-                document.getElementById(loadingId).innerText = data.candidates?.[0]?.content?.parts?.[0]?.text || "抱歉，連線超時。";
-            } catch (e) {
-                document.getElementById(loadingId).innerText = "抱歉，連線超時，請稍後再試。";
-            }
-        }
-
-        function appendMsg(role, text, id) {
-            const div = document.createElement('div');
-            div.className = role === 'user' ? 'flex justify-end' : 'flex justify-start';
-            div.innerHTML = `<div id="${id || ''}" class="${role === 'user' ? 'chat-bubble-user' : 'chat-bubble-ai'} p-4 text-sm leading-relaxed max-w-[90%]">${text}</div>`;
-            chatBox.appendChild(div);
-            chatBox.scrollTop = chatBox.scrollHeight;
-        }
-
-        sendBtn.onclick = handleSend;
-        chatInput.onkeypress = (e) => e.key === 'Enter' && handleSend();
     </script>
 </body>
+
 </html>
