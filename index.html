@@ -7,17 +7,17 @@
     <title>釜山起飛倒數</title>
     <style>
         :root {
-            --bg-0: #07111f;
-            --bg-1: #0b1b33;
-            --bg-2: #102b52;
-            --card: rgba(9, 18, 33, 0.72);
-            --card-border: rgba(255, 255, 255, 0.12);
-            --text: #eef4ff;
-            --muted: rgba(238, 244, 255, 0.7);
-            --accent: #55d7ff;
-            --accent-2: #8b5cf6;
-            --arrival: #7cfc9a;
-            --departure: #ffd166;
+            --bg-0: #fff7fb;
+            --bg-1: #f5fbff;
+            --bg-2: #eef8ef;
+            --card: rgba(255, 255, 255, 0.82);
+            --card-border: rgba(255, 198, 226, 0.72);
+            --text: #4f4a68;
+            --muted: rgba(79, 74, 104, 0.72);
+            --accent: #87d8ff;
+            --accent-2: #f7a7c8;
+            --arrival: #9ee39a;
+            --departure: #ffd77b;
         }
 
         * {
@@ -31,12 +31,13 @@
         }
 
         body {
-            font-family: "Inter", "PingFang TC", "Microsoft JhengHei", sans-serif;
+            font-family: "Segoe UI Rounded", "PingFang TC", "Microsoft JhengHei", sans-serif;
             color: var(--text);
             background:
-                radial-gradient(circle at top, rgba(85, 215, 255, 0.16), transparent 24%),
-                radial-gradient(circle at 20% 20%, rgba(139, 92, 246, 0.18), transparent 30%),
-                linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 45%, var(--bg-2) 100%);
+                radial-gradient(circle at top, rgba(255, 205, 229, 0.9), transparent 18%),
+                radial-gradient(circle at 18% 12%, rgba(162, 231, 255, 0.55), transparent 16%),
+                radial-gradient(circle at 82% 18%, rgba(180, 238, 193, 0.5), transparent 16%),
+                linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 48%, var(--bg-2) 100%);
             overflow-x: hidden;
         }
 
@@ -52,19 +53,19 @@
         }
 
         body::before {
-            width: 24rem;
-            height: 24rem;
-            left: -8rem;
-            top: 20vh;
-            background: radial-gradient(circle, rgba(85, 215, 255, 0.25), transparent 65%);
+            width: 28rem;
+            height: 28rem;
+            left: -10rem;
+            top: 16vh;
+            background: radial-gradient(circle, rgba(255, 190, 220, 0.48), transparent 63%);
         }
 
         body::after {
-            width: 20rem;
-            height: 20rem;
-            right: -4rem;
+            width: 22rem;
+            height: 22rem;
+            right: -6rem;
             bottom: 8vh;
-            background: radial-gradient(circle, rgba(255, 209, 102, 0.18), transparent 65%);
+            background: radial-gradient(circle, rgba(167, 227, 255, 0.38), transparent 64%);
         }
 
         .shell {
@@ -79,17 +80,22 @@
         .frame {
             width: min(1120px, 100%);
             border: 1px solid var(--card-border);
-            border-radius: 32px;
-            background: linear-gradient(180deg, rgba(9, 18, 33, 0.78), rgba(5, 11, 22, 0.88));
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+            border-radius: 36px;
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(255, 252, 254, 0.94));
+            box-shadow: 0 24px 70px rgba(240, 160, 194, 0.22);
             overflow: hidden;
-            backdrop-filter: blur(16px);
+            backdrop-filter: blur(12px);
         }
 
         .hero {
             position: relative;
-            padding: 36px 28px 24px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 34px 28px 26px;
+            border-bottom: 1px solid rgba(255, 198, 226, 0.45);
+            background:
+                radial-gradient(circle at 12% 22%, rgba(255, 226, 240, 0.92), transparent 18%),
+                radial-gradient(circle at 88% 10%, rgba(225, 245, 255, 0.85), transparent 16%),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(255, 248, 252, 0.92));
         }
 
         .hero::before {
@@ -97,8 +103,9 @@
             position: absolute;
             inset: 0;
             background:
-                linear-gradient(120deg, rgba(85, 215, 255, 0.12), transparent 35%),
-                radial-gradient(circle at 75% 20%, rgba(139, 92, 246, 0.18), transparent 28%);
+                radial-gradient(circle at 18% 22%, rgba(255, 210, 226, 0.65), transparent 12%),
+                radial-gradient(circle at 72% 28%, rgba(181, 237, 255, 0.6), transparent 14%),
+                radial-gradient(circle at 60% 8%, rgba(201, 247, 195, 0.45), transparent 12%);
             pointer-events: none;
         }
 
@@ -109,8 +116,8 @@
             gap: 10px;
             padding: 8px 14px;
             border-radius: 999px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 198, 226, 0.65);
             color: var(--muted);
             font-size: 12px;
             letter-spacing: 0.18em;
@@ -121,22 +128,22 @@
             width: 8px;
             height: 8px;
             border-radius: 999px;
-            background: var(--departure);
-            box-shadow: 0 0 18px rgba(255, 209, 102, 0.8);
+            background: #ffb3cf;
+            box-shadow: 0 0 18px rgba(255, 179, 207, 0.8);
         }
 
         .title {
             position: relative;
             margin: 18px 0 10px;
-            font-size: clamp(2.3rem, 6vw, 5rem);
-            line-height: 0.98;
-            letter-spacing: -0.04em;
+            font-size: clamp(2.2rem, 5.4vw, 4.6rem);
+            line-height: 1.02;
+            letter-spacing: -0.03em;
             font-weight: 900;
         }
 
         .title span {
             display: inline-block;
-            background: linear-gradient(90deg, #ffffff 0%, #8ee9ff 45%, #c4b5fd 100%);
+            background: linear-gradient(90deg, #ff8dbf 0%, #87d8ff 48%, #88da9b 100%);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -147,7 +154,7 @@
             max-width: 760px;
             margin: 0;
             color: var(--muted);
-            font-size: 1rem;
+            font-size: 1.02rem;
             line-height: 1.7;
         }
 
@@ -162,7 +169,7 @@
         }
 
         .countdown-panel {
-            border-right: 1px solid rgba(255, 255, 255, 0.08);
+            border-right: 1px solid rgba(255, 198, 226, 0.45);
         }
 
         .countdown-grid {
@@ -176,9 +183,10 @@
             position: relative;
             padding: 18px 14px 16px;
             border-radius: 22px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 243, 248, 0.95));
+            border: 1px solid rgba(255, 198, 226, 0.6);
             overflow: hidden;
+            box-shadow: 0 10px 20px rgba(255, 185, 210, 0.12);
         }
 
         .tile::after {
@@ -188,7 +196,7 @@
             width: 140px;
             height: 140px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(85, 215, 255, 0.18), transparent 65%);
+            background: radial-gradient(circle, rgba(255, 222, 234, 0.7), transparent 65%);
         }
 
         .value {
@@ -217,8 +225,9 @@
             flex-wrap: wrap;
             padding: 16px 18px;
             border-radius: 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 248, 252, 0.95));
+            border: 1px solid rgba(255, 198, 226, 0.55);
+            box-shadow: 0 10px 20px rgba(255, 185, 210, 0.09);
         }
 
         .status strong {
@@ -235,9 +244,9 @@
         .badge {
             padding: 8px 12px;
             border-radius: 999px;
-            background: rgba(85, 215, 255, 0.12);
-            border: 1px solid rgba(85, 215, 255, 0.35);
-            color: #b9f1ff;
+            background: rgba(255, 235, 245, 0.96);
+            border: 1px solid rgba(255, 181, 210, 0.8);
+            color: #c75e8e;
             font-size: 0.82rem;
             white-space: nowrap;
         }
@@ -256,14 +265,16 @@
 
         .flight-card {
             position: relative;
-            min-height: 390px;
+            min-height: 420px;
             border-radius: 28px;
             background:
-                radial-gradient(circle at 50% 22%, rgba(255, 255, 255, 0.08), transparent 20%),
-                linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.02));
-            border: 1px solid rgba(255, 255, 255, 0.1);
+                radial-gradient(circle at 18% 18%, rgba(255, 241, 249, 0.96), transparent 17%),
+                radial-gradient(circle at 78% 10%, rgba(226, 247, 255, 0.9), transparent 16%),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 247, 251, 0.95));
+            border: 1px solid rgba(255, 198, 226, 0.6);
             overflow: hidden;
             padding: 24px;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.55);
         }
 
         .map-header {
@@ -276,7 +287,7 @@
 
         .map-header h2 {
             margin: 0;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             letter-spacing: 0.02em;
         }
 
@@ -289,7 +300,13 @@
         .route-wrap {
             position: relative;
             margin-top: 12px;
-            height: 270px;
+            height: 300px;
+            border-radius: 28px;
+            background:
+                radial-gradient(circle at 50% 12%, rgba(255, 255, 255, 0.98), transparent 16%),
+                linear-gradient(180deg, rgba(194, 236, 255, 0.72), rgba(255, 245, 250, 0.95));
+            border: 1px solid rgba(255, 198, 226, 0.5);
+            overflow: hidden;
         }
 
         .route-card {
@@ -300,7 +317,7 @@
 
         .airport {
             position: absolute;
-            top: 195px;
+            top: 214px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -323,14 +340,14 @@
             width: 18px;
             height: 18px;
             border-radius: 999px;
-            border: 2px solid rgba(255, 255, 255, 0.9);
+            border: 2px solid rgba(255, 255, 255, 0.95);
             background: var(--accent);
-            box-shadow: 0 0 0 10px rgba(85, 215, 255, 0.12);
+            box-shadow: 0 0 0 10px rgba(135, 216, 255, 0.18);
         }
 
         .airport.right .pin {
             background: var(--arrival);
-            box-shadow: 0 0 0 10px rgba(124, 252, 154, 0.12);
+            box-shadow: 0 0 0 10px rgba(158, 227, 154, 0.18);
         }
 
         .airport small {
@@ -346,25 +363,39 @@
 
         .plane {
             position: absolute;
-            width: 58px;
-            height: 58px;
+            width: 74px;
+            height: 54px;
             left: 0;
             top: 0;
             transform: translate(-50%, -50%);
             display: grid;
             place-items: center;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.35), rgba(85, 215, 255, 0.18) 55%, rgba(85, 215, 255, 0.08) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+            border-radius: 28px 34px 24px 30px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 244, 249, 0.98));
+            border: 2px solid rgba(255, 180, 210, 0.95);
+            box-shadow: 0 12px 26px rgba(239, 153, 193, 0.22);
             backdrop-filter: blur(8px);
         }
 
         .plane::before {
             content: "✈";
-            font-size: 1.8rem;
-            transform: rotate(12deg);
-            text-shadow: 0 0 18px rgba(255, 255, 255, 0.35);
+            position: relative;
+            z-index: 2;
+            font-size: 1.7rem;
+            transform: rotate(8deg);
+            color: #79b9f1;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.9);
+        }
+
+        .plane::after {
+            content: "";
+            position: absolute;
+            inset: 8px 8px auto auto;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 161, 187, 0.8);
+            box-shadow: -40px 18px 0 0 rgba(255, 161, 187, 0.16);
         }
 
         .glow {
@@ -372,9 +403,11 @@
             inset: 0;
             pointer-events: none;
             background:
-                radial-gradient(circle at 20% 65%, rgba(85, 215, 255, 0.16), transparent 16%),
-                radial-gradient(circle at 80% 45%, rgba(124, 252, 154, 0.12), transparent 16%);
-            opacity: 0.9;
+                radial-gradient(circle at 18% 28%, rgba(255, 255, 255, 0.8), transparent 11%),
+                radial-gradient(circle at 35% 18%, rgba(255, 255, 255, 0.75), transparent 9%),
+                radial-gradient(circle at 80% 18%, rgba(255, 255, 255, 0.75), transparent 9%),
+                radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.55), transparent 10%);
+            opacity: 0.95;
         }
 
         .meta {
@@ -386,20 +419,22 @@
         .meta-card {
             padding: 18px;
             border-radius: 22px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 248, 252, 0.96));
+            border: 1px solid rgba(255, 198, 226, 0.55);
+            box-shadow: 0 10px 20px rgba(255, 185, 210, 0.08);
         }
 
         .commute-card {
             position: relative;
-            min-height: 280px;
+            min-height: 308px;
             border-radius: 24px;
             background:
-                radial-gradient(circle at 50% 22%, rgba(255, 255, 255, 0.08), transparent 20%),
-                linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.02));
-            border: 1px solid rgba(255, 255, 255, 0.1);
+                radial-gradient(circle at 18% 16%, rgba(255, 241, 249, 0.95), transparent 16%),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 248, 252, 0.95));
+            border: 1px solid rgba(255, 198, 226, 0.55);
             overflow: hidden;
             padding: 20px;
+            box-shadow: 0 12px 24px rgba(255, 185, 210, 0.1);
         }
 
         .commute-head {
@@ -426,6 +461,10 @@
             position: relative;
             height: 204px;
             margin-top: 6px;
+            border-radius: 22px;
+            background: linear-gradient(180deg, rgba(227, 245, 255, 0.92), rgba(255, 250, 253, 0.98));
+            border: 1px solid rgba(255, 198, 226, 0.42);
+            overflow: hidden;
         }
 
         .route-mini svg {
@@ -436,8 +475,8 @@
 
         .route-mini .label-side {
             position: absolute;
-            bottom: 2px;
-            color: rgba(238, 244, 255, 0.72);
+            bottom: 6px;
+            color: rgba(79, 74, 104, 0.72);
             font-size: 0.78rem;
             letter-spacing: 0.08em;
             text-transform: uppercase;
@@ -467,21 +506,21 @@
             width: 12px;
             height: 12px;
             border-radius: 999px;
-            border: 2px solid rgba(255, 255, 255, 0.92);
-            box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.95);
+            box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.14);
         }
 
         .route-node .node-label {
-            max-width: 84px;
+            max-width: 92px;
             text-align: center;
-            color: rgba(238, 244, 255, 0.8);
+            color: rgba(79, 74, 104, 0.82);
             font-size: 0.7rem;
             line-height: 1.1;
             letter-spacing: 0.04em;
         }
 
         .route-node .node-sub {
-            color: rgba(238, 244, 255, 0.5);
+            color: rgba(79, 74, 104, 0.54);
             font-size: 0.62rem;
             text-transform: uppercase;
             letter-spacing: 0.1em;
@@ -495,7 +534,7 @@
             border-radius: 999px;
             transform: translate(-50%, -50%);
             z-index: 2;
-            box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.06);
+            box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.15);
         }
 
         .marker.start {
@@ -512,29 +551,44 @@
             position: absolute;
             left: 0;
             top: 0;
-            width: 42px;
-            height: 42px;
+            width: 48px;
+            height: 36px;
             transform: translate(-50%, -50%);
             display: grid;
             place-items: center;
-            border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3);
+            border-radius: 24px 24px 18px 18px;
+            border: 2px solid rgba(255, 180, 210, 0.95);
+            box-shadow: 0 10px 18px rgba(239, 153, 193, 0.14);
             backdrop-filter: blur(6px);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 245, 249, 0.98));
         }
 
         .mini-plane::before {
             content: "✈";
-            font-size: 1.2rem;
-            transform: rotate(10deg);
+            position: relative;
+            z-index: 2;
+            font-size: 1rem;
+            transform: rotate(8deg);
+            color: #79b9f1;
+        }
+
+        .mini-plane::after {
+            content: "";
+            position: absolute;
+            right: 6px;
+            top: 7px;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: rgba(255, 161, 187, 0.8);
         }
 
         .mini-plane.metro {
-            background: radial-gradient(circle, rgba(85, 215, 255, 0.28), rgba(85, 215, 255, 0.1) 65%, rgba(85, 215, 255, 0.05) 100%);
+            box-shadow: 0 10px 18px rgba(135, 216, 255, 0.18);
         }
 
         .mini-plane.highway {
-            background: radial-gradient(circle, rgba(255, 209, 102, 0.28), rgba(255, 209, 102, 0.1) 65%, rgba(255, 209, 102, 0.05) 100%);
+            box-shadow: 0 10px 18px rgba(255, 209, 102, 0.18);
         }
 
         .commute-meta {
@@ -569,9 +623,9 @@
 
         .footer {
             padding: 16px 28px 28px;
-            color: rgba(238, 244, 255, 0.55);
+            color: rgba(79, 74, 104, 0.6);
             font-size: 0.88rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            border-top: 1px solid rgba(255, 198, 226, 0.35);
         }
 
         @media (max-width: 920px) {
@@ -581,7 +635,7 @@
 
             .countdown-panel {
                 border-right: none;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+                border-bottom: 1px solid rgba(255, 198, 226, 0.45);
             }
 
             .route-wrap {
@@ -621,7 +675,7 @@
             }
 
             .route-wrap {
-                height: 220px;
+                height: 230px;
             }
 
             .airport {
@@ -645,12 +699,12 @@
             <header class="hero">
                 <div class="eyebrow">
                     <span class="dot"></span>
-                    Flight Countdown
+                    Cute Flight Countdown
                 </div>
-                <h1 class="title">飛往 <span>釜山機場</span> 的起飛倒數</h1>
+                <h1 class="title">飛往 <span>釜山</span> 的小小倒數</h1>
                 <p class="subtitle">
                     目標起飛時間為 <strong>2026/06/05 02:40</strong>（台灣時間）。
-                    上方顯示剩餘時間，下方飛機會沿著台灣到韓國的弧形航線前進，越接近起飛時間，位置越靠近韓國。
+                    上方看倒數，下方是 Q 版地圖小航線，飛機會從台灣一路飛到韓國釜山。
                 </p>
             </header>
 
@@ -699,10 +753,10 @@
                     <div class="flight-card">
                         <div class="map-header">
                             <div>
-                                <h2>台灣 → 韓國 航線動態</h2>
-                                <p>飛機位置根據剩餘時間比例移動</p>
+                                <h2>台灣到韓國的 Q 版地圖</h2>
+                                <p>飛機位置會跟著時間慢慢前進</p>
                             </div>
-                            <div class="badge" id="progressBadge">航程進度 0%</div>
+                        <div class="badge" id="progressBadge">小飛機進度 0%</div>
                         </div>
 
                         <div class="route-wrap" id="routeWrap">
@@ -711,29 +765,32 @@
                             <svg class="route-card" viewBox="0 0 920 270" preserveAspectRatio="none" aria-hidden="true">
                                 <defs>
                                     <linearGradient id="routeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                        <stop offset="0%" stop-color="#55d7ff" stop-opacity="0.15"></stop>
-                                        <stop offset="50%" stop-color="#8b5cf6" stop-opacity="0.85"></stop>
-                                        <stop offset="100%" stop-color="#7cfc9a" stop-opacity="0.85"></stop>
+                                        <stop offset="0%" stop-color="#87d8ff" stop-opacity="0.9"></stop>
+                                        <stop offset="55%" stop-color="#f7a7c8" stop-opacity="0.9"></stop>
+                                        <stop offset="100%" stop-color="#9ee39a" stop-opacity="0.9"></stop>
                                     </linearGradient>
                                     <linearGradient id="dashGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                        <stop offset="0%" stop-color="#55d7ff"></stop>
-                                        <stop offset="100%" stop-color="#7cfc9a"></stop>
+                                        <stop offset="0%" stop-color="#87d8ff"></stop>
+                                        <stop offset="100%" stop-color="#9ee39a"></stop>
                                     </linearGradient>
-                                    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
-                                        <feGaussianBlur stdDeviation="5" result="blur"></feGaussianBlur>
-                                        <feMerge>
-                                            <feMergeNode in="blur"></feMergeNode>
-                                            <feMergeNode in="SourceGraphic"></feMergeNode>
-                                        </feMerge>
-                                    </filter>
                                 </defs>
 
-                                <path d="M 102 182 C 260 58, 620 58, 818 182" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="16"
+                                <path d="M 102 182 C 260 58, 620 58, 818 182" fill="none" stroke="rgba(255,255,255,0.65)" stroke-width="16"
                                     stroke-linecap="round"></path>
                                 <path id="routePath" d="M 102 182 C 260 58, 620 58, 818 182" fill="none" stroke="url(#routeGradient)"
                                     stroke-width="4" stroke-linecap="round"></path>
                                 <path id="routeDash" d="M 102 182 C 260 58, 620 58, 818 182" fill="none" stroke="url(#dashGradient)"
-                                    stroke-width="4" stroke-linecap="round" stroke-dasharray="10 16" opacity="0.7"></path>
+                                    stroke-width="4" stroke-linecap="round" stroke-dasharray="8 14" opacity="0.65"></path>
+                                <path d="M 122 200 C 178 164, 202 120, 210 92 C 186 96, 162 124, 154 156 C 132 170, 120 188, 122 200 Z"
+                                    fill="#b8f7a2" stroke="#8bcf84" stroke-width="3"></path>
+                                <path d="M 726 100 C 758 86, 790 92, 808 118 C 828 144, 826 168, 810 184 C 784 178, 756 160, 742 134 C 736 122, 732 110, 726 100 Z"
+                                    fill="#f9d3e4" stroke="#f4a9c8" stroke-width="3"></path>
+                                <ellipse cx="168" cy="78" rx="26" ry="12" fill="rgba(255,255,255,0.9)"></ellipse>
+                                <ellipse cx="206" cy="70" rx="18" ry="9" fill="rgba(255,255,255,0.9)"></ellipse>
+                                <ellipse cx="742" cy="56" rx="24" ry="11" fill="rgba(255,255,255,0.9)"></ellipse>
+                                <ellipse cx="780" cy="50" rx="16" ry="8" fill="rgba(255,255,255,0.9)"></ellipse>
+                                <circle cx="198" cy="162" r="6" fill="#fff6bc"></circle>
+                                <circle cx="756" cy="142" r="6" fill="#fff6bc"></circle>
                             </svg>
 
                             <div class="airport left">
@@ -766,19 +823,19 @@
                                 <svg viewBox="0 0 520 168" preserveAspectRatio="none" aria-hidden="true">
                                     <defs>
                                         <linearGradient id="metroGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                            <stop offset="0%" stop-color="#55d7ff" stop-opacity="0.2"></stop>
-                                            <stop offset="100%" stop-color="#55d7ff" stop-opacity="0.9"></stop>
+                                            <stop offset="0%" stop-color="#87d8ff" stop-opacity="0.9"></stop>
+                                            <stop offset="100%" stop-color="#f7a7c8" stop-opacity="0.9"></stop>
                                         </linearGradient>
                                     </defs>
-                                    <path d="M 38 98 C 132 18, 300 18, 484 98" fill="none" stroke="rgba(255,255,255,0.08)"
+                                    <path d="M 38 98 C 132 18, 300 18, 484 98" fill="none" stroke="rgba(255,255,255,0.85)"
                                         stroke-width="12" stroke-linecap="round"></path>
                                     <path id="metroPath" d="M 38 98 C 132 18, 300 18, 484 98" fill="none" stroke="url(#metroGradient)"
                                         stroke-width="4" stroke-linecap="round" stroke-dasharray="8 14"></path>
-                                    <circle cx="38" cy="98" r="6" fill="#55d7ff"></circle>
-                                    <circle cx="155" cy="44" r="5" fill="#9de9ff"></circle>
-                                    <circle cx="272" cy="28" r="5" fill="#c4b5fd"></circle>
-                                    <circle cx="388" cy="44" r="5" fill="#7cfc9a"></circle>
-                                    <circle cx="484" cy="98" r="6" fill="#7cfc9a"></circle>
+                                    <circle cx="38" cy="98" r="6" fill="#87d8ff"></circle>
+                                    <circle cx="155" cy="44" r="5" fill="#bdefff"></circle>
+                                    <circle cx="272" cy="28" r="5" fill="#ffd1e4"></circle>
+                                    <circle cx="388" cy="44" r="5" fill="#c9efb6"></circle>
+                                    <circle cx="484" cy="98" r="6" fill="#9ee39a"></circle>
                                 </svg>
                                 <div class="marker start"></div>
                                 <div class="marker end"></div>
@@ -832,19 +889,19 @@
                                 <svg viewBox="0 0 520 168" preserveAspectRatio="none" aria-hidden="true">
                                     <defs>
                                         <linearGradient id="highwayGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                            <stop offset="0%" stop-color="#ffd166" stop-opacity="0.2"></stop>
-                                            <stop offset="100%" stop-color="#7cfc9a" stop-opacity="0.9"></stop>
+                                            <stop offset="0%" stop-color="#ffd77b" stop-opacity="0.9"></stop>
+                                            <stop offset="100%" stop-color="#9ee39a" stop-opacity="0.9"></stop>
                                         </linearGradient>
                                     </defs>
-                                    <path d="M 38 102 C 124 34, 312 28, 484 92" fill="none" stroke="rgba(255,255,255,0.08)"
+                                    <path d="M 38 102 C 124 34, 312 28, 484 92" fill="none" stroke="rgba(255,255,255,0.85)"
                                         stroke-width="12" stroke-linecap="round"></path>
                                     <path id="highwayPath" d="M 38 102 C 124 34, 312 28, 484 92" fill="none" stroke="url(#highwayGradient)"
                                         stroke-width="4" stroke-linecap="round" stroke-dasharray="8 14"></path>
-                                    <circle cx="38" cy="102" r="6" fill="#ffd166"></circle>
-                                    <circle cx="140" cy="58" r="5" fill="#ffe39a"></circle>
-                                    <circle cx="250" cy="44" r="5" fill="#ffcb6b"></circle>
-                                    <circle cx="360" cy="52" r="5" fill="#b8f7a2"></circle>
-                                    <circle cx="484" cy="92" r="6" fill="#7cfc9a"></circle>
+                                    <circle cx="38" cy="102" r="6" fill="#ffd77b"></circle>
+                                    <circle cx="140" cy="58" r="5" fill="#ffe9ad"></circle>
+                                    <circle cx="250" cy="44" r="5" fill="#ffd39d"></circle>
+                                    <circle cx="360" cy="52" r="5" fill="#c9efb6"></circle>
+                                    <circle cx="484" cy="92" r="6" fill="#9ee39a"></circle>
                                 </svg>
                                 <div class="marker start" style="background:#ffd166;"></div>
                                 <div class="marker end"></div>
@@ -894,18 +951,18 @@
                         </div>
                         <div class="meta-card">
                             <span>Mode</span>
-                            <strong>Real-time movement</strong>
+                            <strong>可愛路線</strong>
                         </div>
                         <div class="meta-card">
                             <span>Status</span>
-                            <strong id="flightStatus">Preparing for departure</strong>
+                            <strong id="flightStatus">準備出發中</strong>
                         </div>
                     </div>
                 </section>
             </div>
 
             <footer class="footer">
-                Busan flight dashboard · Countdown updates every second
+                Busan cute flight countdown · 每秒更新一次
             </footer>
         </section>
     </main>
@@ -987,16 +1044,16 @@
             routeDash.setAttribute('stroke-dashoffset', dashOffset);
 
             const progressPercent = Math.round(progress * 100);
-            els.progressBadge.textContent = `航程進度 ${progressPercent}%`;
+            els.progressBadge.textContent = `小飛機進度 ${progressPercent}%`;
 
             if (diff > 0) {
                 els.statusTitle.textContent = '距離起飛還有';
                 els.statusSubtitle.textContent = '飛機會隨倒數往韓國方向前進';
-                els.flightStatus.textContent = 'Preparing for departure';
+                els.flightStatus.textContent = '準備出發中';
             } else {
                 els.statusTitle.textContent = '已到起飛時間';
-                els.statusSubtitle.textContent = '飛機已抵達航線終點';
-                els.flightStatus.textContent = 'Flight has departed';
+                els.statusSubtitle.textContent = '飛機已經飛到釜山啦';
+                els.flightStatus.textContent = '已起飛';
             }
 
             updateCommuteRoute({
@@ -1041,11 +1098,11 @@
                 : '00:00';
 
             if (now < start) {
-                statusEl.textContent = `待命 ${remainingText}`;
+                statusEl.textContent = `還沒出發 ${remainingText}`;
             } else if (now < end) {
-                statusEl.textContent = `${label} 進行中 ${remainingText}`;
+                statusEl.textContent = `${label} 出發中 ${remainingText}`;
             } else {
-                statusEl.textContent = 'Arrived';
+                statusEl.textContent = '已抵達';
             }
         }
 
