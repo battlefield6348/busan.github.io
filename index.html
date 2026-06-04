@@ -4,382 +4,1057 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>釜山奢華醫美之旅 | 官方導覽手冊 (純淨版)</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>釜山起飛倒數</title>
     <style>
         :root {
-            --color-primary: #1e3a8a;
-            /* 深海藍 */
-            --color-secondary: #06b6d4;
-            /* 活力青 */
-            --color-accent: #ec4899;
-            /* 醫美粉 */
-            --color-bg: #f8fafc;
+            --bg-0: #07111f;
+            --bg-1: #0b1b33;
+            --bg-2: #102b52;
+            --card: rgba(9, 18, 33, 0.72);
+            --card-border: rgba(255, 255, 255, 0.12);
+            --text: #eef4ff;
+            --muted: rgba(238, 244, 255, 0.7);
+            --accent: #55d7ff;
+            --accent-2: #8b5cf6;
+            --arrival: #7cfc9a;
+            --departure: #ffd166;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            min-height: 100%;
         }
 
         body {
-            font-family: 'Inter', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
-            background-color: var(--color-bg);
-            color: #1e293b;
-            scroll-behavior: smooth;
+            font-family: "Inter", "PingFang TC", "Microsoft JhengHei", sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at top, rgba(85, 215, 255, 0.16), transparent 24%),
+                radial-gradient(circle at 20% 20%, rgba(139, 92, 246, 0.18), transparent 30%),
+                linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 45%, var(--bg-2) 100%);
+            overflow-x: hidden;
         }
 
-        /* 穩定容器：防止圖表塌陷 */
-        .viz-container {
-            position: relative;
-            width: 100%;
-            height: 350px;
-            background: #ffffff;
-            border-radius: 1.5rem;
+        body::before,
+        body::after {
+            content: "";
+            position: fixed;
+            inset: auto;
+            pointer-events: none;
+            z-index: 0;
+            filter: blur(40px);
+            opacity: 0.55;
         }
 
-        /* 圖片區塊穩定性 */
-        .img-container {
+        body::before {
+            width: 24rem;
+            height: 24rem;
+            left: -8rem;
+            top: 20vh;
+            background: radial-gradient(circle, rgba(85, 215, 255, 0.25), transparent 65%);
+        }
+
+        body::after {
+            width: 20rem;
+            height: 20rem;
+            right: -4rem;
+            bottom: 8vh;
+            background: radial-gradient(circle, rgba(255, 209, 102, 0.18), transparent 65%);
+        }
+
+        .shell {
             position: relative;
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            border-radius: 1.25rem;
+            z-index: 1;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+        }
+
+        .frame {
+            width: min(1120px, 100%);
+            border: 1px solid var(--card-border);
+            border-radius: 32px;
+            background: linear-gradient(180deg, rgba(9, 18, 33, 0.78), rgba(5, 11, 22, 0.88));
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
             overflow: hidden;
-            background-color: #e2e8f0;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(16px);
         }
 
-        .img-container img {
+        .hero {
+            position: relative;
+            padding: 36px 28px 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(120deg, rgba(85, 215, 255, 0.12), transparent 35%),
+                radial-gradient(circle at 75% 20%, rgba(139, 92, 246, 0.18), transparent 28%);
+            pointer-events: none;
+        }
+
+        .eyebrow {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: var(--muted);
+            font-size: 12px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: var(--departure);
+            box-shadow: 0 0 18px rgba(255, 209, 102, 0.8);
+        }
+
+        .title {
+            position: relative;
+            margin: 18px 0 10px;
+            font-size: clamp(2.3rem, 6vw, 5rem);
+            line-height: 0.98;
+            letter-spacing: -0.04em;
+            font-weight: 900;
+        }
+
+        .title span {
+            display: inline-block;
+            background: linear-gradient(90deg, #ffffff 0%, #8ee9ff 45%, #c4b5fd 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .subtitle {
+            position: relative;
+            max-width: 760px;
+            margin: 0;
+            color: var(--muted);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            gap: 0;
+        }
+
+        .panel {
+            padding: 28px;
+        }
+
+        .countdown-panel {
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .countdown-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 14px;
+            margin-top: 22px;
+        }
+
+        .tile {
+            position: relative;
+            padding: 18px 14px 16px;
+            border-radius: 22px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+
+        .tile::after {
+            content: "";
+            position: absolute;
+            inset: auto -20% -40% auto;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(85, 215, 255, 0.18), transparent 65%);
+        }
+
+        .value {
+            position: relative;
+            font-size: clamp(2rem, 5vw, 3.8rem);
+            line-height: 1;
+            font-weight: 900;
+            letter-spacing: -0.05em;
+        }
+
+        .label {
+            position: relative;
+            margin-top: 8px;
+            color: var(--muted);
+            font-size: 0.82rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .status {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+            padding: 16px 18px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .status strong {
+            display: block;
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .status span {
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .badge {
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: rgba(85, 215, 255, 0.12);
+            border: 1px solid rgba(85, 215, 255, 0.35);
+            color: #b9f1ff;
+            font-size: 0.82rem;
+            white-space: nowrap;
+        }
+
+        .flight-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .commute-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .flight-card {
+            position: relative;
+            min-height: 390px;
+            border-radius: 28px;
+            background:
+                radial-gradient(circle at 50% 22%, rgba(255, 255, 255, 0.08), transparent 20%),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.02));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            padding: 24px;
+        }
+
+        .map-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .map-header h2 {
+            margin: 0;
+            font-size: 1.1rem;
+            letter-spacing: 0.02em;
+        }
+
+        .map-header p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .route-wrap {
+            position: relative;
+            margin-top: 12px;
+            height: 270px;
+        }
+
+        .route-card {
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+            display: block;
         }
 
-        .img-container:hover img {
-            transform: scale(1.08);
-        }
-
-        /* 裝飾線條 */
-        .day-divider {
-            position: relative;
-            padding-left: 2rem;
-            border-left: 4px solid #e2e8f0;
-        }
-
-        .day-marker {
+        .airport {
             position: absolute;
-            left: -14px;
+            top: 195px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+
+        .airport.left {
+            left: 72px;
+        }
+
+        .airport.right {
+            right: 52px;
+            left: auto;
+            transform: translateX(50%);
+        }
+
+        .pin {
+            width: 18px;
+            height: 18px;
+            border-radius: 999px;
+            border: 2px solid rgba(255, 255, 255, 0.9);
+            background: var(--accent);
+            box-shadow: 0 0 0 10px rgba(85, 215, 255, 0.12);
+        }
+
+        .airport.right .pin {
+            background: var(--arrival);
+            box-shadow: 0 0 0 10px rgba(124, 252, 154, 0.12);
+        }
+
+        .airport small {
+            color: var(--muted);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-size: 0.72rem;
+        }
+
+        .airport strong {
+            font-size: 1rem;
+        }
+
+        .plane {
+            position: absolute;
+            width: 58px;
+            height: 58px;
+            left: 0;
             top: 0;
-            width: 24px;
-            height: 24px;
-            background: white;
-            border: 4px solid var(--color-secondary);
+            transform: translate(-50%, -50%);
+            display: grid;
+            place-items: center;
             border-radius: 50%;
-            z-index: 10;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.35), rgba(85, 215, 255, 0.18) 55%, rgba(85, 215, 255, 0.08) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(8px);
         }
 
-        .tip-box {
-            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-            border-left: 4px solid var(--color-secondary);
+        .plane::before {
+            content: "✈";
+            font-size: 1.8rem;
+            transform: rotate(12deg);
+            text-shadow: 0 0 18px rgba(255, 255, 255, 0.35);
         }
 
-        .big-number {
-            font-size: 5rem;
-            font-weight: 900;
-            line-height: 1;
-            background: linear-gradient(to bottom, var(--color-primary), var(--color-secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .glow {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(circle at 20% 65%, rgba(85, 215, 255, 0.16), transparent 16%),
+                radial-gradient(circle at 80% 45%, rgba(124, 252, 154, 0.12), transparent 16%);
+            opacity: 0.9;
+        }
+
+        .meta {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .meta-card {
+            padding: 18px;
+            border-radius: 22px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .commute-card {
+            position: relative;
+            min-height: 280px;
+            border-radius: 24px;
+            background:
+                radial-gradient(circle at 50% 22%, rgba(255, 255, 255, 0.08), transparent 20%),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.02));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        .commute-head {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .commute-head h3 {
+            margin: 0;
+            font-size: 1.05rem;
+        }
+
+        .commute-head p {
+            margin: 6px 0 0;
+            color: var(--muted);
+            font-size: 0.88rem;
+            line-height: 1.5;
+        }
+
+        .route-mini {
+            position: relative;
+            height: 204px;
+            margin-top: 6px;
+        }
+
+        .route-mini svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .route-mini .label-side {
+            position: absolute;
+            bottom: 2px;
+            color: rgba(238, 244, 255, 0.72);
+            font-size: 0.78rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .route-mini .label-left {
+            left: 4px;
+        }
+
+        .route-mini .label-right {
+            right: 4px;
+            text-align: right;
+        }
+
+        .route-node {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .route-node .node-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 999px;
+            border: 2px solid rgba(255, 255, 255, 0.92);
+            box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.05);
+        }
+
+        .route-node .node-label {
+            max-width: 84px;
+            text-align: center;
+            color: rgba(238, 244, 255, 0.8);
+            font-size: 0.7rem;
+            line-height: 1.1;
+            letter-spacing: 0.04em;
+        }
+
+        .route-node .node-sub {
+            color: rgba(238, 244, 255, 0.5);
+            font-size: 0.62rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .marker {
+            position: absolute;
+            top: 112px;
+            width: 12px;
+            height: 12px;
+            border-radius: 999px;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.06);
+        }
+
+        .marker.start {
+            left: 26px;
+            background: #55d7ff;
+        }
+
+        .marker.end {
+            right: 20px;
+            background: #7cfc9a;
+        }
+
+        .mini-plane {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 42px;
+            height: 42px;
+            transform: translate(-50%, -50%);
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(6px);
+        }
+
+        .mini-plane::before {
+            content: "✈";
+            font-size: 1.2rem;
+            transform: rotate(10deg);
+        }
+
+        .mini-plane.metro {
+            background: radial-gradient(circle, rgba(85, 215, 255, 0.28), rgba(85, 215, 255, 0.1) 65%, rgba(85, 215, 255, 0.05) 100%);
+        }
+
+        .mini-plane.highway {
+            background: radial-gradient(circle, rgba(255, 209, 102, 0.28), rgba(255, 209, 102, 0.1) 65%, rgba(255, 209, 102, 0.05) 100%);
+        }
+
+        .commute-meta {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .commute-meta .meta-card {
+            padding: 12px 14px;
+            border-radius: 16px;
+        }
+
+        .commute-meta .meta-card strong {
+            font-size: 0.96rem;
+        }
+
+        .meta-card span {
+            display: block;
+            color: var(--muted);
+            font-size: 0.8rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .meta-card strong {
+            display: block;
+            font-size: 1.1rem;
+        }
+
+        .footer {
+            padding: 16px 28px 28px;
+            color: rgba(238, 244, 255, 0.55);
+            font-size: 0.88rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        @media (max-width: 920px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+
+            .countdown-panel {
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            }
+
+            .route-wrap {
+                height: 250px;
+            }
+
+            .airport.left {
+                left: 44px;
+            }
+
+            .airport.right {
+                right: 34px;
+            }
+
+            .meta {
+                grid-template-columns: 1fr;
+            }
+
+            .commute-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .shell {
+                padding: 12px;
+            }
+
+            .hero,
+            .panel {
+                padding-left: 18px;
+                padding-right: 18px;
+            }
+
+            .countdown-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .route-wrap {
+                height: 220px;
+            }
+
+            .airport {
+                top: 170px;
+            }
+
+            .airport strong {
+                font-size: 0.92rem;
+            }
+
+            .commute-meta {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 
-<body class="antialiased">
+<body>
+    <main class="shell">
+        <section class="frame" aria-label="飛往釜山的起飛倒數">
+            <header class="hero">
+                <div class="eyebrow">
+                    <span class="dot"></span>
+                    Flight Countdown
+                </div>
+                <h1 class="title">飛往 <span>釜山機場</span> 的起飛倒數</h1>
+                <p class="subtitle">
+                    目標起飛時間為 <strong>2026/06/05 02:40</strong>（台灣時間）。
+                    上方顯示剩餘時間，下方飛機會沿著台灣到韓國的弧形航線前進，越接近起飛時間，位置越靠近韓國。
+                </p>
+            </header>
 
-    <!-- Hero Header -->
-    <header class="relative min-h-[60vh] flex items-center justify-center bg-slate-900 text-white overflow-hidden">
-        <img src="assets/images/messageImage_1769583032709.jpg"
-            class="absolute inset-0 w-full h-full object-cover opacity-100">
-        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent z-10"></div>
-        <div class="relative z-20 max-w-5xl mx-auto px-6 text-center">
-            <div
-                class="inline-block px-4 py-1 bg-cyan-500 rounded-full text-xs font-bold tracking-widest mb-6 shadow-lg uppercase">
-                Flagship Guide</div>
-            <h1 class="text-5xl md:text-7xl font-black mb-8 tracking-tighter">釜山奢華醫美之旅<br><span
-                    class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-pink-500">8人團體全攻略</span></h1>
-            <p class="text-lg md:text-2xl font-light opacity-90 italic">LCT 海景公寓 ‧ 私人遊艇 ‧ 帝王蟹盛宴 ‧ 專業醫美</p>
-        </div>
-    </header>
-
-    <main class="max-w-6xl mx-auto px-6 -mt-16 relative z-30 pb-32">
-
-        <!-- Data Dashboards -->
-        <section class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-24">
-            <div class="bg-white rounded-[2.5rem] shadow-2xl p-8 border border-slate-100">
-                <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center">
-                    <span class="w-2 h-8 bg-cyan-500 rounded-full mr-3"></span>行程屬性分佈 (DNA)
-                </h3>
-                <div class="viz-container"><canvas id="tripDnaChart"></canvas></div>
-            </div>
-            <div class="bg-white rounded-[2.5rem] shadow-2xl p-8 border border-slate-100">
-                <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center">
-                    <span class="w-2 h-8 bg-pink-500 rounded-full mr-3"></span>體力強度預測 (Intensity)
-                </h3>
-                <div class="viz-container"><canvas id="energyChart"></canvas></div>
-            </div>
-        </section>
-
-        <!-- Detailed Journey -->
-        <section class="bg-white rounded-[3rem] shadow-2xl p-8 md:p-16 mb-24">
-            <h2
-                class="text-4xl font-black text-slate-900 mb-16 border-b border-slate-100 pb-8 text-center md:text-left">
-                五天完整行程細節</h2>
-
-            <div class="space-y-24">
-
-                <!-- Day 1 -->
-                <div class="day-divider">
-                    <div class="day-marker"></div>
-                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
-                        <div class="lg:col-span-7">
-                            <span class="bg-blue-100 text-blue-700 font-bold px-3 py-1 rounded-md text-sm">DAY 01 | 6/5
-                                週五</span>
-                            <h3 class="text-3xl font-black text-slate-800 mt-4 mb-6">抵達、西面購物與夕陽甘川洞</h3>
-                            <div class="space-y-4 text-slate-600 mb-8">
-                                <p><strong class="text-blue-900">06:10：</strong> 抵達金海機場。預約 2 台 Venti 大車，先去「西面登巴斯塔」寄行李。
-                                </p>
-                                <p><strong class="text-blue-900">上午：</strong> 西面早餐與補眠。享用豬肉湯飯，或在咖啡廳稍作休息。</p>
-                                <p><strong class="text-blue-900">15:00 - 17:30：</strong> 甘川洞文化村。避開早晨旅行團，這時光線溫柔，8 人拍照更美。
-                                </p>
-                                <p><strong class="text-blue-900">18:00：</strong> 南浦洞美食：下山去南浦洞/札嘎其吃晚餐，逛 BIFF 廣場，回西面休息。
-                                </p>
-                            </div>
-                            <div class="tip-box p-6 rounded-2xl">
-                                <h4 class="font-bold text-blue-900 mb-2 flex items-center">💡 專家建議</h4>
-                                <ul class="text-sm space-y-2">
-                                    <li>• 甘川洞拍照建議穿著簡潔單色系，背景才不會太亂。</li>
-                                    <li>• 推薦南浦洞烤牛腸，8人聚餐氣氛極佳。</li>
-                                </ul>
-                            </div>
+            <div class="content">
+                <section class="panel countdown-panel">
+                    <div class="status">
+                        <div>
+                            <strong id="statusTitle">距離起飛還有</strong>
+                            <span id="statusSubtitle">倒數會即時更新</span>
                         </div>
-                        <div class="lg:col-span-5">
-                            <div class="img-container">
-                                <img src="https://images.unsplash.com/photo-1578301978018-3005759f48f3?q=80&w=2070&auto=format&fit=crop"
-                                    alt="甘川洞">
-                            </div>
+                        <div class="badge" id="flightBadge">TPE → PUS</div>
+                    </div>
+
+                    <div class="countdown-grid" aria-live="polite">
+                        <div class="tile">
+                            <div class="value" id="days">00</div>
+                            <div class="label">Days</div>
+                        </div>
+                        <div class="tile">
+                            <div class="value" id="hours">00</div>
+                            <div class="label">Hours</div>
+                        </div>
+                        <div class="tile">
+                            <div class="value" id="minutes">00</div>
+                            <div class="label">Minutes</div>
+                        </div>
+                        <div class="tile">
+                            <div class="value" id="seconds">00</div>
+                            <div class="label">Seconds</div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Day 2 -->
-                <div class="day-divider">
-                    <div class="day-marker"></div>
-                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
-                        <div class="lg:col-span-7">
-                            <span class="bg-cyan-100 text-cyan-700 font-bold px-3 py-1 rounded-md text-sm">DAY 02 | 6/6
-                                週六</span>
-                            <h3 class="text-3xl font-black text-slate-800 mt-4 mb-6">松島美景與廣安里無人機震撼</h3>
-                            <div class="space-y-4 text-slate-600 mb-8">
-                                <p><strong class="text-blue-900">11:00：</strong> 松島海上纜車。體驗透明水晶車廂，輕鬆看海不費力。</p>
-                                <p><strong class="text-blue-900">14:00：</strong> 白淺灘文化村。海景咖啡廳坐著放空，欣賞影島海景。</p>
-                                <p><strong class="text-blue-900">18:00：</strong> 廣安里遊艇。前往遊艇碼頭，準備 8 人包船體驗。</p>
-                                <p><strong class="text-blue-900">20:00：</strong> 無人機秀 + 煙火。週六重頭戲，海上享受最完美視角。</p>
-                            </div>
-                            <div class="tip-box p-6 rounded-2xl">
-                                <h4 class="font-bold text-blue-900 mb-2 flex items-center">💡 專家建議</h4>
-                                <ul class="text-sm space-y-2">
-                                    <li>• 無人機秀是週六限定，海上包船需提前至少三週預約。</li>
-                                    <li>• 晚上海上溫差大，建議隨身攜帶薄外套。</li>
-                                </ul>
-                            </div>
+                    <div class="status" style="margin-top: 18px;">
+                        <div>
+                            <strong id="localTime">--</strong>
+                            <span>目前本機時間</span>
                         </div>
-                        <div class="lg:col-span-5">
-                            <div class="img-container">
-                                <img src="https://images.unsplash.com/photo-1548115184-bc6544d06a58?q=80&w=2070&auto=format&fit=crop"
-                                    alt="廣安里">
-                            </div>
+                        <div>
+                            <strong id="targetTime">2026/06/05 02:40</strong>
+                            <span>預定起飛時間</span>
                         </div>
                     </div>
-                </div>
+                </section>
 
-                <!-- Day 3 -->
-                <div class="day-divider">
-                    <div class="day-marker"></div>
-                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
-                        <div class="lg:col-span-7">
-                            <span class="bg-pink-100 text-pink-700 font-bold px-3 py-1 rounded-md text-sm">DAY 03 | 6/7
-                                週日</span>
-                            <h3 class="text-3xl font-black text-slate-800 mt-4 mb-6">東釜山大集結 (體力挑戰)</h3>
-                            <div class="space-y-4 text-slate-600 mb-8">
-                                <p><strong class="text-blue-900">10:00：</strong> 移動至海雲台。換至 NEWCZ LCT 公寓寄行李。</p>
-                                <p><strong class="text-blue-900">11:30：</strong> 藍線公園。膠囊列車 ＋ 海岸列車。</p>
-                                <p><strong class="text-blue-900">14:00：</strong> 海東龍宮寺。打卡韓國唯一的海邊神秘寺廟。</p>
-                                <p><strong class="text-blue-900">15:30：</strong> Skyline Luge。8 人進行刺激的競速遊戲。</p>
-                                <p><strong class="text-blue-900">17:30：</strong> 機張市場大螃蟹。行程結束後的豪華獎勵。</p>
+                <section class="panel flight-panel">
+                    <div class="flight-card">
+                        <div class="map-header">
+                            <div>
+                                <h2>台灣 → 韓國 航線動態</h2>
+                                <p>飛機位置根據剩餘時間比例移動</p>
                             </div>
-                            <div class="tip-box p-6 rounded-2xl">
-                                <h4 class="font-bold text-blue-900 mb-2 flex items-center">💡 專家建議</h4>
-                                <ul class="text-sm space-y-2">
-                                    <li>• 藍線公園膠囊列車請務必準時官網搶票。</li>
-                                    <li>• 機張市場吃螃蟹記得跟店家確認 8 人用餐是否包含蟹膏炒飯。</li>
-                                </ul>
-                            </div>
+                            <div class="badge" id="progressBadge">航程進度 0%</div>
                         </div>
-                        <div class="lg:col-span-5">
-                            <div class="img-container">
-                                <img src="https://images.unsplash.com/photo-1620162540679-052a5592ec69?q=80&w=1974&auto=format&fit=crop"
-                                    alt="藍線公園">
+
+                        <div class="route-wrap" id="routeWrap">
+                            <div class="glow"></div>
+
+                            <svg class="route-card" viewBox="0 0 920 270" preserveAspectRatio="none" aria-hidden="true">
+                                <defs>
+                                    <linearGradient id="routeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" stop-color="#55d7ff" stop-opacity="0.15"></stop>
+                                        <stop offset="50%" stop-color="#8b5cf6" stop-opacity="0.85"></stop>
+                                        <stop offset="100%" stop-color="#7cfc9a" stop-opacity="0.85"></stop>
+                                    </linearGradient>
+                                    <linearGradient id="dashGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" stop-color="#55d7ff"></stop>
+                                        <stop offset="100%" stop-color="#7cfc9a"></stop>
+                                    </linearGradient>
+                                    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+                                        <feGaussianBlur stdDeviation="5" result="blur"></feGaussianBlur>
+                                        <feMerge>
+                                            <feMergeNode in="blur"></feMergeNode>
+                                            <feMergeNode in="SourceGraphic"></feMergeNode>
+                                        </feMerge>
+                                    </filter>
+                                </defs>
+
+                                <path d="M 102 182 C 260 58, 620 58, 818 182" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="16"
+                                    stroke-linecap="round"></path>
+                                <path id="routePath" d="M 102 182 C 260 58, 620 58, 818 182" fill="none" stroke="url(#routeGradient)"
+                                    stroke-width="4" stroke-linecap="round"></path>
+                                <path id="routeDash" d="M 102 182 C 260 58, 620 58, 818 182" fill="none" stroke="url(#dashGradient)"
+                                    stroke-width="4" stroke-linecap="round" stroke-dasharray="10 16" opacity="0.7"></path>
+                            </svg>
+
+                            <div class="airport left">
+                                <div class="pin"></div>
+                                <small>Departure</small>
+                                <strong>台灣</strong>
                             </div>
+
+                            <div class="airport right">
+                                <div class="pin"></div>
+                                <small>Arrival</small>
+                                <strong>韓國 / 釜山</strong>
+                            </div>
+
+                            <div class="plane" id="plane" aria-label="飛機位置"></div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Day 4 -->
-                <div class="day-divider">
-                    <div class="day-marker"></div>
-                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
-                        <div class="lg:col-span-7">
-                            <span class="bg-purple-100 text-purple-700 font-bold px-3 py-1 rounded-md text-sm">DAY 04 |
-                                6/8 週一</span>
-                            <h3 class="text-3xl font-black text-slate-800 mt-4 mb-6">醫美日、血拼與公寓派對</h3>
-                            <div class="space-y-4 text-slate-600 mb-8">
-                                <p><strong class="text-blue-900">10:00：</strong> 樂天 Outlet 購物。最後大採買。</p>
-                                <p><strong class="text-blue-900">14:00：</strong> 醫美行程。建議預約 PPEUM 或 Renovo 海雲台店。</p>
-                                <p><strong class="text-blue-900">18:00：</strong> 入住 LCT 公寓。醫美後直接回豪宅冰敷休息。</p>
-                                <p><strong class="text-blue-900">19:00：</strong> 公寓外送派對。8 人無敵海景炸雞派對。</p>
+                    <div class="commute-grid">
+                        <article class="commute-card">
+                            <div class="commute-head">
+                                <div>
+                                    <h3>台北組</h3>
+                                    <p>從台北 23:23 出發，搭桃園機場捷運線前往桃園機場。</p>
+                                </div>
+                                <div class="badge">A組</div>
                             </div>
-                            <div class="tip-box p-6 rounded-2xl">
-                                <h4 class="font-bold text-blue-900 mb-2 flex items-center">💡 專家建議</h4>
-                                <ul class="text-sm space-y-2">
-                                    <li>• 醫美後若有微出血，不建議去桑拿或泡溫泉。</li>
-                                    <li>• 推薦使用外送 App 點 BHC 或橋村炸雞。</li>
-                                </ul>
+
+                            <div class="route-mini" id="metroWrap">
+                                <svg viewBox="0 0 520 168" preserveAspectRatio="none" aria-hidden="true">
+                                    <defs>
+                                        <linearGradient id="metroGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                            <stop offset="0%" stop-color="#55d7ff" stop-opacity="0.2"></stop>
+                                            <stop offset="100%" stop-color="#55d7ff" stop-opacity="0.9"></stop>
+                                        </linearGradient>
+                                    </defs>
+                                    <path d="M 38 98 C 132 18, 300 18, 484 98" fill="none" stroke="rgba(255,255,255,0.08)"
+                                        stroke-width="12" stroke-linecap="round"></path>
+                                    <path id="metroPath" d="M 38 98 C 132 18, 300 18, 484 98" fill="none" stroke="url(#metroGradient)"
+                                        stroke-width="4" stroke-linecap="round" stroke-dasharray="8 14"></path>
+                                    <circle cx="38" cy="98" r="6" fill="#55d7ff"></circle>
+                                    <circle cx="155" cy="44" r="5" fill="#9de9ff"></circle>
+                                    <circle cx="272" cy="28" r="5" fill="#c4b5fd"></circle>
+                                    <circle cx="388" cy="44" r="5" fill="#7cfc9a"></circle>
+                                    <circle cx="484" cy="98" r="6" fill="#7cfc9a"></circle>
+                                </svg>
+                                <div class="marker start"></div>
+                                <div class="marker end"></div>
+                                <div class="label-side label-left">台北</div>
+                                <div class="label-side label-right">桃園機場</div>
+                                <div class="route-node" style="left: 8%; top: 46%;">
+                                    <div class="node-dot" style="background:#55d7ff;"></div>
+                                    <div class="node-label">台北車站</div>
+                                </div>
+                                <div class="route-node" style="left: 31%; top: 25%;">
+                                    <div class="node-dot" style="background:#9de9ff;"></div>
+                                    <div class="node-label">三重 / 新北</div>
+                                </div>
+                                <div class="route-node" style="left: 56%; top: 16%;">
+                                    <div class="node-dot" style="background:#c4b5fd;"></div>
+                                    <div class="node-label">機場第一航廈</div>
+                                </div>
+                                <div class="route-node" style="left: 78%; top: 24%;">
+                                    <div class="node-dot" style="background:#7cfc9a;"></div>
+                                    <div class="node-label">機場第二航廈</div>
+                                </div>
+                                <div class="mini-plane metro" id="metroPlane" aria-label="台北組移動位置"></div>
                             </div>
+
+                            <div class="commute-meta">
+                                <div class="meta-card">
+                                    <span>Departure</span>
+                                    <strong>23:23</strong>
+                                </div>
+                                <div class="meta-card">
+                                    <span>Route</span>
+                                    <strong>桃園機場捷運</strong>
+                                </div>
+                                <div class="meta-card">
+                                    <span>Status</span>
+                                    <strong id="metroStatus">Waiting</strong>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="commute-card">
+                            <div class="commute-head">
+                                <div>
+                                    <h3>台中組</h3>
+                                    <p>從台中 22:20 出發，走國道一號北上到桃園機場。</p>
+                                </div>
+                                <div class="badge">B組</div>
+                            </div>
+
+                            <div class="route-mini" id="highwayWrap">
+                                <svg viewBox="0 0 520 168" preserveAspectRatio="none" aria-hidden="true">
+                                    <defs>
+                                        <linearGradient id="highwayGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                            <stop offset="0%" stop-color="#ffd166" stop-opacity="0.2"></stop>
+                                            <stop offset="100%" stop-color="#7cfc9a" stop-opacity="0.9"></stop>
+                                        </linearGradient>
+                                    </defs>
+                                    <path d="M 38 102 C 124 34, 312 28, 484 92" fill="none" stroke="rgba(255,255,255,0.08)"
+                                        stroke-width="12" stroke-linecap="round"></path>
+                                    <path id="highwayPath" d="M 38 102 C 124 34, 312 28, 484 92" fill="none" stroke="url(#highwayGradient)"
+                                        stroke-width="4" stroke-linecap="round" stroke-dasharray="8 14"></path>
+                                    <circle cx="38" cy="102" r="6" fill="#ffd166"></circle>
+                                    <circle cx="140" cy="58" r="5" fill="#ffe39a"></circle>
+                                    <circle cx="250" cy="44" r="5" fill="#ffcb6b"></circle>
+                                    <circle cx="360" cy="52" r="5" fill="#b8f7a2"></circle>
+                                    <circle cx="484" cy="92" r="6" fill="#7cfc9a"></circle>
+                                </svg>
+                                <div class="marker start" style="background:#ffd166;"></div>
+                                <div class="marker end"></div>
+                                <div class="label-side label-left">台中</div>
+                                <div class="label-side label-right">桃園機場</div>
+                                <div class="route-node" style="left: 9%; top: 48%;">
+                                    <div class="node-dot" style="background:#ffd166;"></div>
+                                    <div class="node-label">台中</div>
+                                    <div class="node-sub">Start</div>
+                                </div>
+                                <div class="route-node" style="left: 29%; top: 29%;">
+                                    <div class="node-dot" style="background:#ffe39a;"></div>
+                                    <div class="node-label">彰化 / 交流道</div>
+                                </div>
+                                <div class="route-node" style="left: 52%; top: 24%;">
+                                    <div class="node-dot" style="background:#ffcb6b;"></div>
+                                    <div class="node-label">新竹系統</div>
+                                </div>
+                                <div class="route-node" style="left: 73%; top: 31%;">
+                                    <div class="node-dot" style="background:#b8f7a2;"></div>
+                                    <div class="node-label">楊梅 / 桃園</div>
+                                </div>
+                                <div class="mini-plane highway" id="highwayPlane" aria-label="台中組移動位置"></div>
+                            </div>
+
+                            <div class="commute-meta">
+                                <div class="meta-card">
+                                    <span>Departure</span>
+                                    <strong>22:20</strong>
+                                </div>
+                                <div class="meta-card">
+                                    <span>Route</span>
+                                    <strong>國道一號北上</strong>
+                                </div>
+                                <div class="meta-card">
+                                    <span>Status</span>
+                                    <strong id="highwayStatus">Waiting</strong>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <div class="meta">
+                        <div class="meta-card">
+                            <span>Route</span>
+                            <strong>Taiwan to Busan</strong>
                         </div>
-                        <div class="lg:col-span-5">
-                            <div class="img-container">
-                                <img src="https://images.unsplash.com/photo-1582996269871-dad1e4adbbc7?q=80&w=2070&auto=format&fit=crop"
-                                    alt="LCT">
-                            </div>
+                        <div class="meta-card">
+                            <span>Mode</span>
+                            <strong>Real-time movement</strong>
+                        </div>
+                        <div class="meta-card">
+                            <span>Status</span>
+                            <strong id="flightStatus">Preparing for departure</strong>
                         </div>
                     </div>
-                </div>
+                </section>
+            </div>
 
-                <!-- Day 5 -->
-                <div class="day-divider" style="border: none;">
-                    <div class="day-marker"></div>
-                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
-                        <div class="lg:col-span-7">
-                            <span class="badge bg-slate-200 text-slate-700 font-bold px-3 py-1 rounded-md text-sm">DAY
-                                05 | 6/9 週二</span>
-                            <h3 class="text-3xl font-black text-slate-800 mt-4 mb-6">悠閒採買與賦歸</h3>
-                            <div class="space-y-4 text-slate-600">
-                                <p><strong class="text-blue-900">10:00：</strong> E-Mart 採買。購買韓國伴手禮。</p>
-                                <p><strong class="text-blue-900">13:00：</strong> 海雲台午餐。鱈魚湯或冷麵。</p>
-                                <p><strong class="text-blue-900">17:00：</strong> 啟程機場。Venti 回程。</p>
-                                <p><strong class="text-blue-900">20:00：</strong> 搭乘 LJ751 班機。</p>
-                            </div>
-                        </div>
-                        <div class="lg:col-span-5 flex items-center justify-center">
-                            <div
-                                class="w-full h-full bg-slate-100 rounded-3xl flex items-center justify-center text-8xl grayscale opacity-30">
-                                ✈️</div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- Stats Section -->
-        <section
-            class="bg-slate-900 rounded-[3rem] p-12 text-white mb-24 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div><span class="big-number">05</span>
-                <p class="text-xs uppercase opacity-60 mt-4">總天數</p>
-            </div>
-            <div><span class="big-number">08</span>
-                <p class="text-xs uppercase opacity-60 mt-4">成員人數</p>
-            </div>
-            <div><span class="big-number">LCT</span>
-                <p class="text-xs uppercase opacity-60 mt-4">據點</p>
-            </div>
-            <div><span class="big-number">100</span>
-                <p class="text-xs uppercase opacity-60 mt-4">滿意度</p>
-            </div>
+            <footer class="footer">
+                Busan flight dashboard · Countdown updates every second
+            </footer>
         </section>
     </main>
 
-    <footer class="bg-white border-t border-slate-200 py-16 text-center text-slate-400 text-sm">
-        <p>Busan Luxury Medical Tour | 官方導覽手冊 © 2025</p>
-    </footer>
-
     <script>
-        // --- 圖表邏輯 (Chart.js) ---
-        function wrapLabel(str, max) {
-            if (str.length <= max) return str;
-            const words = str.split(' ');
-            let res = [], line = "";
-            words.forEach(w => {
-                if ((line + w).length > max) { res.push(line.trim()); line = w + " "; }
-                else { line += w + " "; }
-            });
-            res.push(line.trim()); return res;
+        const targetDate = new Date('2026-06-05T02:40:00+08:00');
+        const routePath = document.getElementById('routePath');
+        const routeDash = document.getElementById('routeDash');
+        const metroPath = document.getElementById('metroPath');
+        const highwayPath = document.getElementById('highwayPath');
+        const plane = document.getElementById('plane');
+        const metroPlane = document.getElementById('metroPlane');
+        const highwayPlane = document.getElementById('highwayPlane');
+        const routeWrap = document.getElementById('routeWrap');
+        const routeLength = routePath.getTotalLength();
+        const travelWindowMs = 24 * 60 * 60 * 1000;
+        const metroStart = new Date('2026-06-04T23:23:00+08:00');
+        const highwayStart = new Date('2026-06-04T22:20:00+08:00');
+        const metroLength = metroPath.getTotalLength();
+        const highwayLength = highwayPath.getTotalLength();
+
+        const els = {
+            days: document.getElementById('days'),
+            hours: document.getElementById('hours'),
+            minutes: document.getElementById('minutes'),
+            seconds: document.getElementById('seconds'),
+            statusTitle: document.getElementById('statusTitle'),
+            statusSubtitle: document.getElementById('statusSubtitle'),
+            progressBadge: document.getElementById('progressBadge'),
+            flightStatus: document.getElementById('flightStatus'),
+            localTime: document.getElementById('localTime'),
+            metroStatus: document.getElementById('metroStatus'),
+            highwayStatus: document.getElementById('highwayStatus')
+        };
+
+        function pad(value) {
+            return String(value).padStart(2, '0');
         }
 
-        const tooltipConfig = {
-            callbacks: {
-                title: (items) => {
-                    let label = items[0].chart.data.labels[items[0].dataIndex];
-                    return Array.isArray(label) ? label.join(' ') : label;
-                }
+        function formatLocalTime(date) {
+            return new Intl.DateTimeFormat('zh-TW', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            }).format(date).replace(/\//g, '/');
+        }
+
+        function updateCountdown() {
+            const now = new Date();
+            const diff = targetDate - now;
+            const totalSeconds = Math.max(0, Math.floor(diff / 1000));
+
+            const days = Math.floor(totalSeconds / 86400);
+            const hours = Math.floor((totalSeconds % 86400) / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+
+            els.days.textContent = pad(days);
+            els.hours.textContent = pad(hours);
+            els.minutes.textContent = pad(minutes);
+            els.seconds.textContent = pad(seconds);
+            els.localTime.textContent = formatLocalTime(now);
+
+            const progress = diff <= 0
+                ? 1
+                : Math.min(Math.max((travelWindowMs - diff) / travelWindowMs, 0), 1);
+            const dashOffset = routeLength * (1 - progress);
+            const point = routePath.getPointAtLength(routeLength * progress);
+            const nextPoint = routePath.getPointAtLength(Math.min(routeLength, routeLength * progress + 1));
+            const angle = Math.atan2(nextPoint.y - point.y, nextPoint.x - point.x) * 180 / Math.PI;
+
+            plane.style.left = `${(point.x / 920) * 100}%`;
+            plane.style.top = `${(point.y / 270) * 100}%`;
+            plane.style.transform = `translate(-50%, -50%) rotate(${angle + 90}deg)`;
+            routeDash.setAttribute('stroke-dashoffset', dashOffset);
+
+            const progressPercent = Math.round(progress * 100);
+            els.progressBadge.textContent = `航程進度 ${progressPercent}%`;
+
+            if (diff > 0) {
+                els.statusTitle.textContent = '距離起飛還有';
+                els.statusSubtitle.textContent = '飛機會隨倒數往韓國方向前進';
+                els.flightStatus.textContent = 'Preparing for departure';
+            } else {
+                els.statusTitle.textContent = '已到起飛時間';
+                els.statusSubtitle.textContent = '飛機已抵達航線終點';
+                els.flightStatus.textContent = 'Flight has departed';
             }
-        };
 
-        window.onload = function () {
-            // Radar DNA
-            const ctxDna = document.getElementById('tripDnaChart').getContext('2d');
-            new Chart(ctxDna, {
-                type: 'radar',
-                data: {
-                    labels: ['奢華體驗 (Luxury)', '美食饗宴 (Food)', '文化打卡 (Spots)', '醫美養顏 (Beauty)', '購物血拼 (Shopping)'].map(l => wrapLabel(l, 16)),
-                    datasets: [{
-                        data: [10, 10, 8, 10, 7],
-                        backgroundColor: 'rgba(6, 182, 212, 0.2)',
-                        borderColor: '#06b6d4',
-                        borderWidth: 2,
-                        pointBackgroundColor: '#ec4899'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false }, tooltip: tooltipConfig },
-                    scales: { r: { angleLines: { display: false }, suggestedMin: 0, suggestedMax: 10, ticks: { display: false } } }
-                }
+            updateCommuteRoute({
+                now,
+                start: metroStart,
+                end: targetDate,
+                path: metroPath,
+                plane: metroPlane,
+                length: metroLength,
+                statusEl: els.metroStatus,
+                label: '桃園機場捷運'
             });
 
-            // Intensity Line
-            const ctxEnergy = document.getElementById('energyChart').getContext('2d');
-            new Chart(ctxEnergy, {
-                type: 'line',
-                data: {
-                    labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5'],
-                    datasets: [{
-                        label: '體力負荷',
-                        data: [7, 6, 10, 5, 4],
-                        borderColor: '#ec4899',
-                        backgroundColor: 'rgba(236, 72, 153, 0.1)',
-                        fill: true,
-                        tension: 0.4,
-                        pointRadius: 6,
-                        pointBackgroundColor: '#1e3a8a'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false }, tooltip: tooltipConfig },
-                    scales: { y: { display: false, beginAtZero: true, max: 12 }, x: { grid: { display: false } } }
-                }
+            updateCommuteRoute({
+                now,
+                start: highwayStart,
+                end: targetDate,
+                path: highwayPath,
+                plane: highwayPlane,
+                length: highwayLength,
+                statusEl: els.highwayStatus,
+                label: '國道一號北上'
             });
-        };
+        }
+
+        function updateCommuteRoute({ now, start, end, path, plane, length, statusEl, label }) {
+            const total = Math.max(end - start, 1);
+            const progress = now <= start ? 0 : now >= end ? 1 : (now - start) / total;
+            const point = path.getPointAtLength(length * progress);
+            const nextPoint = path.getPointAtLength(Math.min(length, length * progress + 1));
+            const angle = Math.atan2(nextPoint.y - point.y, nextPoint.x - point.x) * 180 / Math.PI;
+
+            plane.style.left = `${(point.x / 520) * 100}%`;
+            plane.style.top = `${(point.y / 168) * 100}%`;
+            plane.style.transform = `translate(-50%, -50%) rotate(${angle + 90}deg)`;
+
+            const remainingMs = Math.max(end - now, 0);
+            const remainingHours = Math.floor(remainingMs / 3600000);
+            const remainingMinutes = Math.floor((remainingMs % 3600000) / 60000);
+            const remainingText = remainingMs > 0
+                ? `${pad(remainingHours)}:${pad(remainingMinutes)}`
+                : '00:00';
+
+            if (now < start) {
+                statusEl.textContent = `待命 ${remainingText}`;
+            } else if (now < end) {
+                statusEl.textContent = `${label} 進行中 ${remainingText}`;
+            } else {
+                statusEl.textContent = 'Arrived';
+            }
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        window.addEventListener('resize', () => {
+            updateCountdown();
+        });
     </script>
 </body>
 
